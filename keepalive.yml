@@ -1,0 +1,10 @@
+# Pings the database every 3 days so the free Supabase project never pauses.
+name: keepalive
+on:
+  schedule: [{cron: "0 8 */3 * *"}]
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -fsS "${{ secrets.SUPABASE_URL }}/rest/v1/articles?select=id&limit=1" -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}"
