@@ -115,7 +115,7 @@ function panelHtml(){
 function welcomeHtml(){let seen=false;try{seen=localStorage.getItem("dng_bm")==="1"}catch(e){}if(seen)return"";
   const ua=navigator.userAgent||"",ios=/iPhone|iPad|iPod/.test(ua),and=/Android/.test(ua),mac=/Mac/.test(navigator.platform||"");
   const how=ios?"tap the Share button, then “Add to Home Screen”":and?"open the browser menu (⋮), then choose “Add to Home screen” or “Bookmark”":`press ${mac?"⌘ + D":"Ctrl + D"}`;
-  return `<div class="inbox"><b>Message from The Luisville Journal</b><div>Welcome! To make sure you never lose us, add this site to your favorites: ${how}. Your ID is stored in this browser, so a bookmark is the easiest way to find your way back.</div><div style="margin-top:6px"><button class="btn sm" data-bm-ok>Got it</button></div></div>`}
+  return `<div class="inbox"><b>Message from The Luisville Journal</b><div>Welcome! To make sure you never lose us, add this site to your favorites: ${how}. Adding us to your favorites is the easiest way to find us again.</div><div style="margin-top:6px"><button class="btn sm" data-bm-ok>Got it</button></div></div>`}
 function inboxHtml(){
   return welcomeHtml()+inbox.map(m=>`<div class="inbox"><b>${m.kind==="news"?"New article":m.kind==="report"?"⚑ Reported article":m.kind==="support"?"✉ Support request":"Message from the editors"}</b><div>${esc(m.body)}</div><div style="margin-top:4px">${m.kind==="news"?`<button class="btn sm" data-ib-read="${m.id}">Read</button> `:(m.kind==="report"||m.kind==="support")?`<button class="btn sm" data-ib-rev="${m.id}">Review in Control</button> `:""}<button class="btn sm" data-ib-ok="${m.id}">${m.kind==="news"||m.kind==="report"||m.kind==="support"?"Dismiss":"Got it"}</button></div></div>`).join("");
 }
