@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Luisville Journal – DNG</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Playfair+Display:wght@400;700;900&family=Old+Standard+TT:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#efe4c8;--ink:#1d1a14;--soft:#6b5f45;--rule:#1d1a14;--card:#f6edd5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#d9cba6;--card:#e4d7b4}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:#3b4a63 url(background.jpg) center/cover fixed no-repeat;color:var(--ink);font-family:'Old Standard TT',Georgia,serif;font-size:17px;line-height:1.55}
+.sheet{max-width:960px;margin:28px auto;background:var(--paper);min-height:100vh;padding:18px 28px 28px;box-shadow:0 0 40px rgba(0,0,0,.4);background-image:radial-gradient(rgba(90,70,30,.08) 1px,transparent 1px);background-size:5px 5px}
+.editor{font-size:11px;font-style:italic;color:var(--soft);letter-spacing:.04em}
+.mast{text-align:center;border-bottom:4px double var(--rule);padding:4px 0 8px}
+.mast h1{font-family:'UnifrakturCook','Playfair Display',Georgia,serif;font-size:clamp(40px,9vw,84px);margin:0;line-height:1.05;font-weight:700}
+.dateline{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--rule);font-family:'Playfair Display',serif;font-size:13px;text-transform:uppercase;letter-spacing:.12em;padding:5px 0}
+nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:10px 0;border-bottom:1px solid var(--rule)}
+button,select,input,textarea{font:inherit}
+.btn{background:transparent;border:1.5px solid var(--ink);color:var(--ink);padding:3px 12px;font-family:'Playfair Display',serif;font-size:12px;text-transform:uppercase;letter-spacing:.1em;cursor:pointer}
+.btn:hover,.btn.on{background:var(--ink);color:var(--paper)}
+.btn.sm{font-size:10px;padding:1px 8px}
+.une{border-bottom:3px double var(--rule);padding:18px 0}
+.une h2{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(30px,6vw,54px);line-height:1.08;margin:6px 0 10px;text-align:center}
+.tag{font-family:'Playfair Display',serif;text-transform:uppercase;letter-spacing:.2em;font-size:11px;text-align:center;color:var(--soft)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0}
+.art{padding:16px 18px;border-bottom:1px solid var(--rule);border-right:1px solid var(--rule)}
+.art h3{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;line-height:1.15;margin:0 0 8px}
+.art img,.une img{display:block;max-width:100%;margin:8px auto;filter:sepia(.55) contrast(1.05);border:1px solid var(--rule)}
+.body p{margin:0 0 .7em;text-align:justify;hyphens:auto}
+.une .body{column-width:300px;column-gap:28px}
+.pub{font-size:11px;color:var(--soft);font-style:italic;margin-top:6px}
+.adm{margin-top:6px;display:flex;gap:6px}
+.calm{text-align:center;font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(22px,4vw,34px);padding:80px 10px}
+.sec{font-family:'Playfair Display',serif;font-size:26px;text-transform:uppercase;letter-spacing:.15em;text-align:center;margin:16px 0 0}
+.note{text-align:center;font-style:italic;color:var(--soft);font-size:14px}
+.pager{display:flex;justify-content:center;gap:6px;margin:16px 0}
+form.ed{border:2px solid var(--ink);background:var(--card);padding:14px;margin:16px 0;display:grid;gap:8px}
+form.ed input,form.ed textarea,form.ed select{width:100%;background:#fffaf0;color:#1d1a14;border:1px solid var(--ink);padding:6px;font-size:16px}
+form.ed textarea{min-height:140px}
+footer{margin-top:28px;border-top:4px double var(--rule);padding-top:8px;text-align:center;font-size:11px;color:var(--soft)}
+.writer{background:none;border:0;color:var(--soft);opacity:.45;font-size:10px;cursor:pointer;text-decoration:underline;margin-top:6px}
+.writer:hover{opacity:1}
+.stack .fact{padding:22px 0;border-bottom:4px double var(--rule);overflow:hidden}.stack .fact:first-child{padding-top:10px}.stack h3{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(24px,4vw,34px);line-height:1.12;margin:0 0 8px}.stack .fact img{float:right;max-width:40%;margin:4px 0 8px 18px}.stack .no{font-family:'Playfair Display',serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);border-bottom:1px solid var(--rule);margin-bottom:8px;display:inline-block}.login{display:flex;gap:6px;justify-content:center;margin:8px 0}.login input{background:#fffaf0;color:#1d1a14;border:1px solid var(--ink);padding:3px 8px;font-size:16px}.bad{color:#8b1a1a;font-size:12px}
+.list{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0}
+.cbox{border:2px solid var(--ink);background:var(--card);padding:12px 16px;margin:14px 0}.cbox h3{font-family:'Playfair Display',serif;margin:0 0 6px}.code{font-family:monospace;font-size:34px;letter-spacing:.2em;margin:10px 0;font-weight:700}.code small{font-size:13px;letter-spacing:0;font-weight:400;color:var(--soft)}.scroll{overflow-x:auto}table.t{width:100%;border-collapse:collapse}table.t td,table.t th{border-bottom:1px solid var(--rule);padding:5px 6px;text-align:left;vertical-align:middle}.cbox input,.cbox select{background:#fffaf0;color:#1d1a14;border:1px solid var(--ink);padding:3px 6px;font-size:15px;max-width:100%}.me{font-size:12px;margin-bottom:6px}.err{color:#8b1a1a;font-size:13px}
+.btn.dis{opacity:.4;cursor:not-allowed}.best{border:3px double var(--ink);background:var(--card);padding:8px 14px 14px;margin:26px 0 0}.podium{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:flex-end;margin:10px 0}.pod{flex:1 1 150px;max-width:230px;border:2px solid var(--ink);text-align:center;padding:8px 6px;font-family:'Playfair Display',serif}.pod b{font-size:19px}.pod .rk{font-size:34px;font-weight:900;line-height:1}.pod.p1{background:#e8c65a;padding-top:16px;padding-bottom:16px}.pod.p2{background:#cfcfc8}.pod.p3{background:#cf9b6a}.role{font-size:10px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--ink);padding:0 4px;white-space:nowrap}ol.rest{max-width:520px;margin:6px auto 0;padding-left:34px}ol.rest li{margin:3px 0}.rep{background:none;border:0;color:var(--soft);opacity:.5;font-size:10px;cursor:pointer;text-decoration:underline;padding:0}.rep:hover{opacity:1}.mod{margin-top:6px;font-size:12px;border-top:1px dashed var(--rule);padding-top:4px}.mod .btn{margin:2px 2px 0 0}.idl{color:var(--ink);font-family:monospace}.flag{color:#e8710a;font-weight:700}a.flag{text-decoration:underline}.blk td{color:#8b1a1a}.blk .idl{color:#8b1a1a}.small{font-size:11px;color:var(--soft);font-style:italic}.hl{outline:3px solid #e8710a;outline-offset:4px}.inbox{border:2px solid var(--ink);background:var(--card);padding:8px 12px;margin:10px 0;font-size:15px}.inbox b{font-family:'Playfair Display',serif}.bar{height:16px;border:1.5px solid var(--ink);background:#fffaf0;margin:6px 0}.bar div{height:100%;background:#8a7a58}.myid{font-family:monospace}textarea.m{width:100%;min-height:70px}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+</head>
+<body><div class="sheet" id="app"></div>
+<script>
+/* ===== PASTE YOUR SUPABASE ANON KEY HERE (see README.md) ===== */
+const SUPABASE_URL="https://mqzrkalpknzxjzqdkobp.supabase.co",SUPABASE_KEY="sb_publishable_Lby0_HhVxFX8t5H311Bocw_DFxqtLpo";
+const PER=4,KEEP=7;
+let rank=[],sb=null,me=null,vis=null,panel="",msg="",pendingDel=null,byDay={},meta={},inbox=[],seen=new Set(),reported=new Set(),hl=null,hlScroll=false,polled=false,view="front",page=0,day=todayKey(),form=null,ctl=null,bestFull=false,dlg=null,lastInbox="",pinned=[],arch={open:false,mode:"day",arts:[],days:[],q:"",more:false,n:5},syncFor=null,findIdx=-1,fires={},myFires=new Set(),pop=[],popRange="day",configured=!/PASTE/.test(SUPABASE_KEY);
+const isAdmin=()=>!!me&&me.role==="admin";
+const isStaff=()=>!!me&&me.role!=="subscriber";
+const canEdit=a=>isStaff()&&(isAdmin()||a.account_id===me.id);
+const tok=()=>me?me.token:null;
+const vArgs=()=>({p_vid:vis?vis.id:null,p_secret:vis?vis.secret:null});
+async function rpc(fn,args){const r=await sb.rpc(fn,args||{});if(r.error)throw r.error;return r.data}
+function keyOf(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function todayKey(){return keyOf(new Date())}
+function addDays(k,n){const d=new Date(k+"T12:00:00");d.setDate(d.getDate()+n);return keyOf(d)}
+function daysAgo(n){const d=new Date();d.setDate(d.getDate()-n);return keyOf(d)}
+function fmtDay(k){const [y,m,d]=k.split("-").map(Number);return new Date(y,m-1,d).toLocaleDateString("en-US",{weekday:"long",year:"numeric",month:"long",day:"numeric"})}
+function fmtTs(t){return new Date(t).toLocaleString("en-US",{month:"long",day:"numeric",year:"numeric",hour:"2-digit",minute:"2-digit"})}
+function fmtB(b){b=+b||0;return b>=1048576?(b/1048576).toFixed(1)+" MB":b>=1024?(b/1024).toFixed(1)+" KB":b+" B"}
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const paras=s=>String(s||"").split(/\n+/).filter(Boolean).map(p=>"<p>"+esc(p)+"</p>").join("");
+const dayDocs=k=>byDay[k]||[];
+const findDoc=id=>Object.values(byDay).flat().find(a=>a.id===id);
+const val=id=>{const e=document.getElementById(id);return e?e.value:""};
+const future=t=>t&&Date.parse(t)>Date.now();
+const fmtDT=t=>new Date(t).toLocaleString("en-GB",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+
+function issue(k){
+  const all=dayDocs(k).slice().sort((a,b)=>b.ts-a.ts);
+  const adm=all.filter(a=>a.admin),misc=all.filter(a=>a.type==="misc");
+  let une=adm.find(a=>a.type==="une")||adm.find(a=>a.type==="news");
+  if(!une&&misc.length){const len=a=>(a.body||"").length,rank=(x,y)=>len(y)-len(x)||x.ts-y.ts,withImg=misc.filter(a=>a.image);une=(withImg.length?withImg:misc).slice().sort(rank)[0]}
+  const news=all.filter(a=>a.type!=="misc"&&a!==une);
+  return {all,une,news,misc,fallback:!adm.length};
+}
+function artHtml(a){
+  const m=meta[a.id];let ctrl="";
+  if(canEdit(a))ctrl+=`<div class="adm"><button class="btn sm" data-edit="${a.id}">Edit</button><button class="btn sm" data-del="${a.id}">${pendingDel===a.id?"Click again to confirm":"Delete"}</button></div>`;
+  if(a.type==="misc"&&!a.admin&&!isAdmin())ctrl+=`<div class="adm"><button class="rep" data-report="${a.id}" ${reported.has(a.id)?"disabled":""}>${reported.has(a.id)?"reported":"report"}</button></div>`;
+  if(isAdmin()&&m){const o=+m.open;ctrl+=`<div class="mod">Author ID: <a href="#" class="idl ${o?"flag":""}" data-cvid="${esc(m.vid)}">${esc(m.vid)}</a>${o?` · <b class="flag">⚑ reported ×${o}</b> <span class="small">(click the article to open this ID in Control)</span><br><button class="btn sm" data-mod="${a.id}|block24">Block 24h</button><button class="btn sm" data-mod="${a.id}|block30">Block 1 month</button><button class="btn sm" data-mod="${a.id}|blockforever">Block forever</button><button class="btn sm" data-mod="${a.id}|ignore">Ignore</button>`:""}</div>`}
+  const who=a.author||(a.type==="misc"&&!a.admin?"Anonymous":"The Editors");
+  return `<div class="aw${hl===a.id?" hl":""}" id="a-${a.id}"${isAdmin()&&m&&+m.open?` data-flagged="${esc(m.vid)}" style="cursor:pointer;border-left:4px solid #e8710a;padding-left:8px"`:""}>${a.image?`<img src="${a.image}" alt="">`:""}<div class="body">${paras(a.body)}</div><div class="pub">By ${esc(who)} · Published ${fmtTs(a.ts)}</div><div style="margin-top:4px"><button class="btn sm ${myFires.has(a.id)?"on":""}" data-fire="${a.id}" title="I like this">🔥 ${fires[a.id]||0}</button></div>${ctrl}</div>`;
+}
+function formHtml(){
+  const edit=form.id?findDoc(form.id):null;
+  const opts=isStaff()?`<select id="f-type"><option value="news">Article</option><option value="une">Front Page (The Lead)</option><option value="misc">Miscellany</option></select>`:"";
+  let lastNm="";try{lastNm=localStorage.getItem("dng_name")||""}catch(e){}
+  const author=me?"":`<input id="f-author" placeholder="Your name (optional, 12 max)" maxlength="12" value="${esc(lastNm)}">`;
+  return `<form class="ed" id="ed"><b style="font-family:'Playfair Display'">${edit?"Edit article":isStaff()?"Write an article":"Write a Miscellany item"}</b>${opts}
+  <input id="f-title" placeholder="Title" required maxlength="150" value="${esc(edit?.title||"")}">${author}
+  <textarea id="f-body" placeholder="Article…" required maxlength="12000">${esc(edit?.body||"")}</textarea>
+  ${(isStaff()||(me&&me.subscribed))?`<div><label class="btn sm" style="display:inline-block">Import an image<input id="f-img" type="file" accept="image/*" hidden></label> <span id="f-imgs" class="note">${edit?.image?"Image attached":""}</span></div>`:`<div><span class="btn sm dis" aria-disabled="true">Import an image</span> <span class="note">You must subscribe to upload images.</span></div>`}
+  ${me?`<div class="note">Published under your name: ${esc(me.name)}</div>`:""}
+  <div><button class="btn" type="submit">Publish</button> <button class="btn" type="button" id="f-cancel">Cancel</button></div>
+  ${isStaff()&&!edit?`<label class="note" style="display:block;text-align:left"><input type="checkbox" id="f-notify" style="width:auto"> Notify subscribers <span class="small">(always on for the Front Page)</span></label>`:""}</form>`;
+}
+function panelHtml(){
+  const bad=msg?`<div class="err">${esc(msg)}</div>`:"";
+  const st='style="max-width:420px;margin:16px auto"',tt="font-family:'Playfair Display'";
+  if(panel==="login")return `<form class="ed" id="lgf" ${st}><b style="${tt}">Log in</b><input id="l-n" placeholder="Name" autocomplete="username" required><input id="l-p" type="password" placeholder="Password" autocomplete="current-password" required>${bad}<div><button class="btn" type="submit">Log in</button> <button class="btn" type="button" data-panel="activate">Activate your account</button> <button class="btn" type="button" data-panel="">Cancel</button></div></form>`;
+  if(panel==="activate")return `<form class="ed" id="acf" ${st}><b style="${tt}">Activate your account</b><input id="a-c" placeholder="One-time code" autocomplete="off" required><input id="a-n" placeholder="Choose your name (12 letters max)" maxlength="12" autocomplete="username" required><input id="a-p" type="password" placeholder="Choose a password (8+ characters)" autocomplete="new-password" required><input id="a-p2" type="password" placeholder="Repeat the password" autocomplete="new-password" required>${bad}<div><button class="btn" type="submit">Activate</button> <button class="btn" type="button" data-panel="login">Back to log in</button></div></form>`;
+  if(panel==="subscribe")return `<form class="ed" id="sbf" ${st}><b style="${tt}">Subscribe to the Journal</b><div class="note">Get a notification for every official article. Choose a name and a password for your subscriber account.</div><input id="s-n" placeholder="Choose your name (12 letters max)" maxlength="12" autocomplete="username" required><input id="s-p" type="password" placeholder="Choose a password (8+ characters)" autocomplete="new-password" required><input id="s-p2" type="password" placeholder="Repeat the password" autocomplete="new-password" required>${bad}<div><button class="btn" type="submit">Subscribe</button> <button class="btn" type="button" data-panel="login">I already have an account</button> <button class="btn" type="button" data-panel="">Cancel</button></div></form>`;
+  return "";
+}
+const pinnedHtml=()=>pinned.map(m=>`<div class="inbox"><b>📌 Message from the editors</b><div>${esc(m.body)}</div></div>`).join("");
+async function loadPinned(){try{const r=await rpc("pinned_messages")||[];if(JSON.stringify(r)!==JSON.stringify(pinned)){pinned=r;if(!form&&!panel&&view!=="control")render()}}catch(e){}}
+function welcomeHtml(){let seen=false;try{seen=localStorage.getItem("dng_bm")==="1"}catch(e){}if(seen)return"";
+  const ua=navigator.userAgent||"",ios=/iPhone|iPad|iPod/.test(ua),and=/Android/.test(ua),mac=/Mac/.test(navigator.platform||"");
+  const how=ios?"tap the Share button, then “Add to Home Screen”":and?"open the browser menu (⋮), then choose “Add to Home screen” or “Bookmark”":`press ${mac?"⌘ + D":"Ctrl + D"}`;
+  return `<div class="inbox"><b>Message from The Luisville Journal</b><div>Welcome! To make sure you never lose us, add this site to your favorites: ${how}.</div><div style="margin-top:6px"><button class="btn sm" data-bm-ok>Got it</button></div></div>`}
+function inboxHtml(){
+  return welcomeHtml()+pinnedHtml()+inbox.map(m=>`<div class="inbox"><b>${m.kind==="news"?"New article":m.kind==="report"?"⚑ Reported article":m.kind==="support"?"✉ Support request":"Message from the editors"}</b><div>${esc(m.body)}</div><div style="margin-top:4px">${m.kind==="news"?`<button class="btn sm" data-ib-read="${m.id}">Read</button> `:(m.kind==="report"||m.kind==="support")?`<button class="btn sm" data-ib-rev="${m.id}">Review in Control</button> `:""}<button class="btn sm" data-ib-ok="${m.id}">${m.kind==="news"||m.kind==="report"||m.kind==="support"?"Dismiss":"Got it"}</button></div></div>`).join("");
+}
+function popHtml(){const T={day:"Today",week:"This week",month:"This month"};
+  return `<h3 class="sec" style="font-size:15px;margin:18px 0 6px">Most popular articles</h3><div style="text-align:center;margin-bottom:8px">${Object.keys(T).map(k=>`<button class="btn sm ${popRange===k?"on":""}" data-pop="${k}">${T[k]}</button>`).join(" ")}</div><ol class="rest">${(pop||[]).map(p=>`<li><b>🔥 ${p.fires}</b> · ${p.exists?`<a href="#" data-popart="${p.id}|${esc(p.day)}|${esc(p.type)}">${esc(p.title)}</a>`:esc(p.title)} <span class="small">by ${esc(p.author||"The Editors")}</span></li>`).join("")||`<li style="list-style:none">No 🔥 yet for this period.</li>`}</ol>`}
+function bestHtml(){
+  const L=(rank||[]).slice(0,10),RL={admin:"Admin",writer:"Writer",subscriber:"Subscriber",guest:"Guest"};
+  const dn=e=>(!e.name||/^anonymous$/i.test(e.name))&&e.last_name?e.last_name:e.name;
+  const nm=e=>`<b>${esc(dn(e))}</b> <span class="role">${RL[e.role]||esc(e.role)}</span>${e.vid?`<div class="small myid">${esc(e.vid)}</div>`:""}`;
+  const pods=L.slice(0,3).map((e,i)=>`<div class="pod p${i+1}"><div class="rk">${i+1}</div>${nm(e)}</div>`);
+  const top=(pods.length===3?[pods[1],pods[0],pods[2]]:pods.length===2?[pods[1],pods[0]]:pods).join("");
+  const rest=!bestFull?"":L.slice(3).map((e,i)=>`<li value="${i+4}">${nm(e)}</li>`).join("");
+  return `<section class="best" id="best"><h2 class="sec" style="font-size:22px;margin-top:6px">★ Featured ★</h2><h3 class="sec" style="font-size:15px;margin:0">Best editors</h3>${L.length?`<div class="podium">${top}</div>${rest?`<ol class="rest">${rest}</ol>`:""}${L.length>3?`<div style="text-align:center;margin-top:10px"><button class="btn sm" data-bestfull>${bestFull?"Hide full ranking":"See full ranking"}</button></div>`:""}`:`<div class="note">No ranking yet — write something to enter the Top 10.</div>`}${view==="best"?popHtml():""}</section>`;
+}
+const idnBy=vid=>(ctl&&ctl.idn||[]).find(x=>x.vid===vid);
+const vidOfAcc=id=>{const x=(ctl&&ctl.idn||[]).find(x=>x.account_id===id);return x?x.vid:null};
+const nameLink=a=>{const v=vidOfAcc(a.id);return v?`<a href="#" class="idl" data-cvid="${esc(v)}"><b>${esc(a.name)}</b></a>`:`<b>${esc(a.name)}</b>`};
+function accRow(a){
+  const you=me&&a.id===me.id;
+  if(ctl.editing===a.id)return `<tr><td><input id="e-n" value="${esc(a.name)}" maxlength="12" size="14"></td><td><select id="e-r"><option value="writer" ${a.role==="writer"?"selected":""}>Writer</option><option value="admin" ${a.role==="admin"?"selected":""}>Admin</option><option value="subscriber" ${a.role==="subscriber"?"selected":""}>Subscriber</option></select></td><td><input id="e-p" type="password" placeholder="New password (optional)" autocomplete="new-password" size="18"></td><td><button class="btn sm" data-acc-save="${a.id}">Save</button> <button class="btn sm" data-acc-edit="">Cancel</button></td></tr>`;
+  if(a.protected&&!you)return `<tr><td>${nameLink(a)}</td><td>Admin</td><td>••••••••</td><td><span class="small">Protected account</span></td></tr>`;
+  return `<tr><td>${nameLink(a)}${you?" (you)":""}</td><td>${a.role==="admin"?"Admin":a.role==="writer"?"Writer":"Subscriber"}</td><td>••••••••</td><td><button class="btn sm" data-acc-edit="${a.id}">Edit</button> ${you?"":`<button class="btn sm" data-msg-acc="${a.id}|${esc(a.name)}">Message</button> <button class="btn sm" data-acc-del="${a.id}">${ctl.pendingDel===a.id?"Click again to confirm":"Delete"}</button>`}</td></tr>`;
+}
+const lim=k=>ctl&&ctl.expand?1e9:((ctl&&ctl.lim&&ctl.lim[k])||5);
+const more=(k,total)=>total>lim(k)?`<div style="text-align:center;margin-top:6px"><button class="btn sm" data-more="${k}">See more (${total-lim(k)})</button></div>`:"";
+const searchBar=(k,ph)=>`<div style="margin-bottom:6px"><input data-sqi="${k}" placeholder="${ph}" value="${esc(((ctl&&ctl.sq)||{})[k]||"")}" size="20"> <button class="btn sm" data-sqb="${k}">Find</button></div>`;
+function runFind(){const fi=document.getElementById("f-q");if(!fi)return;const q=fi.value.trim();
+  if(q!==(ctl.find||"")||(q&&!ctl.expand)||(!q&&ctl.expand)){ctl.find=q;ctl.expand=!!q;render();setTimeout(()=>doFind(false),0)}else doFind(true)}
+function doFind(next){const q=(ctl.find||"").toLowerCase(),n=document.getElementById("f-n");if(!q){if(n)n.textContent="";return}
+  const hits=[];document.querySelectorAll(".cbox").forEach(bx=>{const w=document.createTreeWalker(bx,NodeFilter.SHOW_TEXT);let t;while(t=w.nextNode()){const lo=t.nodeValue.toLowerCase();let i=lo.indexOf(q);while(i>=0){hits.push([t,i]);i=lo.indexOf(q,i+q.length)}}});
+  if(!hits.length){if(n)n.textContent="No match.";return}
+  findIdx=next?(findIdx+1)%hits.length:0;const [t,i]=hits[findIdx],r=document.createRange();r.setStart(t,i);r.setEnd(t,i+q.length);const sl=getSelection();sl.removeAllRanges();sl.addRange(r);t.parentElement.scrollIntoView({block:"center"});if(n)n.textContent=`${findIdx+1}/${hits.length}`}
+function archHtml(){return `<div style="margin-top:10px"><div style="margin-bottom:6px"><input id="a-q" placeholder="Date (21-10-2026) or journal title" value="${esc(arch.q)}" size="26"> <button class="btn sm" data-arch-find>Search</button></div>${arch.mode==="art"?(arch.arts.map(a=>`<div class="inbox"><b>${esc(a.title)}</b><div class="small">by ${esc(a.author||"The Editors")} · ${fmtDay(a.day)}</div><div style="margin-top:6px"><button class="btn sm" data-goart="${a.id}|${esc(a.day)}|${esc(a.type)}">Go to the article</button></div></div>`).join("")||`<span class="small">No article found.</span>`):`<div class="list">${arch.days.map(d=>`<button class="btn" data-day="${esc(d.day)}">${fmtDay(d.day)} · ${d.n}</button>`).join("")||`<span class="small">No issue found.</span>`}</div>`}${arch.more?`<div style="text-align:center;margin-top:8px"><button class="btn sm" data-arch-more>See more</button></div>`:""}</div>`}
+const archDate=q=>/^\d{4}(-\d{2}){0,2}$/.test(archQ(q));
+const archQ=q=>{q=q.trim().replace(/[./\s]+/g,"-");let m;const z=n=>String(n).padStart(2,"0");
+  if(m=q.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/))return `${m[3]}-${z(m[2])}-${z(m[1])}`;
+  if(m=q.match(/^(\d{1,2})-(\d{4})$/))return `${m[2]}-${z(m[1])}`;return q}
+async function loadArchive(){try{if(arch.q&&!archDate(arch.q)){const r=await rpc("archive_search",{p_q:arch.q.trim(),p_limit:arch.n+1})||[];arch.mode="art";arch.more=r.length>arch.n;arch.arts=r.slice(0,arch.n)}else{const r=await rpc("archive_days",{p_before:arch.q?null:daysAgo(KEEP),p_q:archQ(arch.q),p_limit:arch.n+1})||[];arch.mode="day";arch.more=r.length>arch.n;arch.days=r.slice(0,arch.n)}}catch(e){arch.days=[];arch.arts=[]}render()}
+function bcHtml(){const bc=ctl.broadcasts||[];
+  const row=b=>`<tr><td>${b.kind==="pinned"?"📌 Pinned on the site":"✉ "+esc(b.target)}<div class="small">${fmtDT(b.created_at)}${b.kind==="pinned"?"":` · ${b.sent} sent · ${b.read} read`}</div></td><td>${esc(b.body)}</td><td><button class="btn sm" data-bcdel="${b.id}">Delete</button></td></tr>`;
+  return `<section class="cbox"><h3>Send a message</h3><input id="b-t" placeholder="@writer @subscriber @guest" size="30" style="margin-bottom:6px"><textarea class="m" id="b-body" maxlength="1000" placeholder="Your message…"></textarea><div style="margin-top:6px"><button class="btn sm" id="b-send">Send to these roles</button> <button class="btn sm" id="b-pin">Pin on the site</button></div><p class="small" style="margin:6px 0 0">Roles: @admin @writer @subscriber @guest (visitors without an account, seen in the last 30 days). A pinned message is shown to everyone each time they open the site, under the bookmark message, until you delete it.</p></section>
+  <section class="cbox"><h3>Sent messages (${bc.length})</h3><div class="scroll"><table class="t">${bc.slice(0,lim("bc")).map(row).join("")||`<tr><td colspan="3">No message sent yet.</td></tr>`}</table></div>${more("bc",bc.length)}</section>`}
+function ctlHtml(){
+  if(!ctl||!ctl.accounts)return `<div class="calm" style="padding:40px 10px;font-size:22px">${ctl&&ctl.err?esc(ctl.err):"Loading…"}</div>`;
+  const staff=ctl.accounts.filter(a=>a.role!=="subscriber"),subs=ctl.accounts.filter(a=>a.role==="subscriber");
+  const th="<tr><th>Name</th><th>Role</th><th>Password</th><th></th></tr>";
+  const st=ctl.stats||{days:[]},sg=ctl.storage;
+   const sqv=k=>((ctl.sq||{})[k]||"").toLowerCase(),staffF=staff.filter(a=>a.name.toLowerCase().includes(sqv("staff"))),subsF=subs.filter(a=>a.name.toLowerCase().includes(sqv("subs"))),visF=(st.days||[]).filter(d=>String(d.day).includes(sqv("vis")));
+  let h=`<h2 class="sec">Control Room</h2><div style="text-align:center;margin-bottom:10px"><input id="f-q" placeholder="Find in Control (Enter to jump)" value="${esc(ctl.find||"")}" size="26"> <button class="btn sm" data-ffind>Find</button> <span id="f-n" class="small"></span></div>${ctl.err?`<div class="err" style="text-align:center">${esc(ctl.err)}</div>`:""}
+  <section class="cbox"><h3>One-time activation code</h3><p class="note" style="text-align:left;margin:0 0 8px">Valid for 10 minutes, usable once. Choose the role of the future account.</p><select id="c-role"><option value="writer">Writer</option><option value="admin">Admin</option></select> <button class="btn sm" id="c-gen">Generate a code</button>${ctl.code?`<div class="code">${esc(ctl.code.code)} <small id="c-left"></small></div>`:""}</section>`;
+  if(ctl.msgTo)h+=`<section class="cbox"><h3>Message to ${esc(ctl.msgTo.label)}</h3><textarea class="m" id="m-body" maxlength="1000" placeholder="They will read it the next time they come to the Journal."></textarea><div style="margin-top:6px"><button class="btn sm" id="m-send">Send</button> <button class="btn sm" id="m-cancel">Cancel</button></div></section>`;
+  h+=`${bcHtml()}${reqHtml()}<section class="cbox"><h3>Admins &amp; writers (${staff.length})</h3>${searchBar("staff","Search a name")}<div class="scroll"><table class="t">${th}${staffF.slice(0,lim("staff")).map(accRow).join("")||`<tr><td colspan="4">No match.</td></tr>`}</table></div>${more("staff",staffF.length)}</section>
+  <section class="cbox"><h3>Subscribers (${subs.length})</h3>${searchBar("subs","Search a name")}<div class="scroll"><table class="t">${th}${subsF.slice(0,lim("subs")).map(accRow).join("")||`<tr><td colspan="4">${subs.length?"No match.":"No subscribers yet."}</td></tr>`}</table></div>${more("subs",subsF.length)}</section>
+  <section class="cbox"><h3>Visits</h3><p style="margin:0 0 6px">Total: <b>${st.total??0}</b> · Today: <b>${st.today??0}</b></p>${searchBar("vis","Search a date (2026-10-21)")}<div class="scroll"><table class="t"><tr><th>Day</th><th>Visits</th></tr>${visF.slice(0,lim("vis")).map(d=>`<tr><td>${esc(d.day)}</td><td>${d.n}</td></tr>`).join("")||`<tr><td colspan="2">No visits found.</td></tr>`}</table></div>${more("vis",visF.length)}</section>`;
+  if(sg){const pct=Math.min(100,sg.db_bytes/sg.limit_bytes*100);h+=`<section class="cbox"><h3>Storage</h3><div class="bar"><div style="width:${pct.toFixed(1)}%"></div></div><p style="margin:0">Used <b>${fmtB(sg.db_bytes)}</b> of ${fmtB(sg.limit_bytes)} (${pct.toFixed(1)}%) · <b>${fmtB(Math.max(0,sg.limit_bytes-sg.db_bytes))}</b> left</p><p class="small" style="margin:4px 0 0">Articles: ${sg.articles} · text ${fmtB(sg.text_bytes)} · images ${fmtB(sg.image_bytes)} · the rest is the database itself. Limit of the free plan (500 MB).</p></section>`}
+  const vs=ctl.visitors||[],tk=todayKey();
+  const tv=new Set(dayDocs(tk).map(a=>meta[a.id]&&meta[a.id].vid).filter(Boolean));
+  const isNow=v=>tv.has(v.id)||ctl.focus===v.id||v.blocked_forever||future(v.blocked_until)||future(v.report_ban_until)||+v.open_reports>0||[v.last_seen,v.last_seen_at,v.last_active,v.last_post_at,v.last_used].some(t=>{if(!t)return false;const d=new Date(t);return !isNaN(d)&&keyOf(d)===tk});
+  const q=(ctl.vq||"").toLowerCase(),match=v=>{const x=idnBy(v.id),n=((x&&x.name)||v.last_name||"").toLowerCase();return v.id.toLowerCase().includes(q)||(n&&n.includes(q))};
+  const shownV=q?vs.filter(match):vs.filter(isNow);
+  h+=`<section class="cbox"><h3>Visitor IDs</h3><div style="margin-bottom:6px"><input id="v-q" placeholder="Search an ID or a name" value="${esc(ctl.vq||"")}" size="22"> <button class="btn sm" data-vfind>Find</button>${q?` <button class="btn sm" data-vclear>Clear</button>`:""}</div><p class="small" style="margin:0 0 6px">${q?`${shownV.length} result(s).`:"Showing IDs used today, blocked or reported. Search to find any other ID."}</p><div class="scroll"><table class="t"><tr><th>ID</th><th>Posts</th><th>Reports</th><th>Status</th><th></th></tr>${shownV.slice(0,lim("ids")).map(v=>{
+    const blocked=v.blocked_forever||future(v.blocked_until);
+    const status=v.blocked_forever?"Blocked forever":future(v.blocked_until)?"Blocked until "+fmtDT(v.blocked_until):future(v.report_ban_until)?"Cannot report until "+fmtDT(v.report_ban_until):"–";
+    const act=blocked?`<button class="btn sm" data-blk="${v.id}|unblock">Unblock</button>`:`<button class="btn sm" data-blkopen="${v.id}">Block ${ctl.blkOpen===v.id?"▴":"▾"}</button>${ctl.blkOpen===v.id?` <button class="btn sm" data-blk="${v.id}|block24">24h</button><button class="btn sm" data-blk="${v.id}|block30">1 month</button><button class="btn sm" data-blk="${v.id}|blockforever">Forever</button>`:""}`;
+    return `<tr id="vid-${v.id}" class="${blocked?"blk":""}${ctl.focus===v.id?" hl":""}"><td><a href="#" class="idl ${+v.open_reports?"flag":""}" data-vid="${esc(v.id)}">${esc(v.id)}</a>${(()=>{const x=idnBy(v.id),n=(x&&x.name)||v.last_name;return n?`<div class="small">${esc(n)}${x&&x.role?` · ${x.role==="admin"?"Admin":x.role==="writer"?"Writer":"Subscriber"}`:""}</div>`:""})()}</td><td>${v.posts}</td><td>${+v.open_reports?`<b class="flag">⚑ ${v.open_reports}</b>`:"–"}</td><td>${status}</td><td>${act} <button class="btn sm" data-msg-vis="${esc(v.id)}">Message</button></td></tr>`}).join("")||`<tr><td colspan="5">${q?"No ID found.":"No ID to show today."}</td></tr>`}</table></div>${more("ids",shownV.length)}</section>`;
+  return h;
+}
+function render(){
+  const today=todayKey(),isToday=day===today,ready=byDay[day]!==undefined,I=issue(day);
+  const pastDays=Array.from({length:KEEP},(_,i)=>daysAgo(i+1));
+  let h=`<div class="editor">Editor-in-chief: IMortalisk</div>
+  <header class="mast"><h1>The Luisville Journal</h1></header>
+  <div class="dateline"><span>${fmtDay(day)}${isToday?"":" — archive"}</span><span>Delivery Not Guaranteed · Price: one cent</span></div>
+  <nav><button class="btn ${view==="front"?"on":""}" data-v="front">Front Page</button><button class="btn ${view==="misc"?"on":""}" data-v="misc">Miscellany</button><button class="btn ${view==="past"?"on":""}" data-v="past">Past Issues</button><button class="btn ${view==="best"?"on":""}" data-v="best">Featured</button>${isAdmin()?`<button class="btn ${view==="control"?"on":""}" data-v="control">Control</button>`:""}${me&&me.subscribed?"":`<button class="btn" data-sub>Subscribe</button>`}${isToday?"":`<button class="btn" data-today>Today's Issue</button>`}</nav>`;
+  if(!configured)h+=`<div class="calm" style="font-size:20px">Setup needed: paste your Supabase key at the top of index.html (see README).</div>`;
+  else{
+    if(view==="front"&&!form)h+=`<div style="text-align:left;margin:6px 0"><button class="btn sm" data-prev>← Previous day</button>${day<today?` <button class="btn sm" data-next>Next day →</button>`:""}</div>`;
+    h+=panelHtml()+inboxHtml();
+    if(view==="control"&&isAdmin())h+=ctlHtml();
+    else{
+      if(form)h+=formHtml();
+      else if(isToday&&view!=="past"&&view!=="best"&&!panel)h+=`<div class="pager"><button class="btn sm" data-new>${isStaff()?"+ Write an article":"+ Write a Miscellany item"}</button></div>`;
+      if(view==="best")h+=bestHtml();
+      else if(view==="past"){
+        h+=`<h2 class="sec">Past Issues</h2><p class="note">The last ${KEEP} days are listed here. Older issues are in the Archive.</p><div class="list">${pastDays.map(d=>`<button class="btn" data-day="${d}">${fmtDay(d)}</button>`).join("")}</div><div style="margin-top:12px;text-align:center"><button class="btn" data-arch>${arch.open?"Hide archive":"Archive"}</button></div>${arch.open?archHtml():""}`;
+      }else if(!ready)h+=`<div class="calm">Setting the type…</div>`;
+      else if(view==="misc"){
+        h+=`<h2 class="sec">Miscellany</h2><p class="note">Anyone may contribute — rumours, sightings and tidbits from Luisville.</p>`;
+        h+=I.misc.length?`<div class="grid">${I.misc.map(a=>`<div class="art"><h3>${esc(a.title)}</h3>${artHtml(a)}</div>`).join("")}</div>`:`<div class="calm">Nothing here yet. Be the first to write!</div>`;
+      }else if(!I.all.length){
+        h+=`<div class="calm">Luisville is calm and its inhabitants with it…</div>`;
+      }else{
+        if(I.fallback)h+=`<p class="note" style="margin-top:12px">The editors have not yet filed this edition — here is the Miscellany.</p>`;
+        if(I.une)h+=`<section class="une"><div class="tag">${I.fallback?"From the Miscellany":"Front Page"}</div><h2>${esc(I.une.title)}</h2>${artHtml(I.une)}</section>`;
+        const list=I.fallback?I.misc.filter(a=>a!==I.une):I.news;
+        const pages=Math.max(1,Math.ceil(list.length/PER));if(page>=pages)page=pages-1;
+        const cur=list.slice(page*PER,page*PER+PER);
+        if(cur.length)h+=I.fallback?`<div class="grid">${cur.map(a=>`<div class="art"><h3>${esc(a.title)}</h3>${artHtml(a)}</div>`).join("")}</div>`:`<div class="stack">${cur.map((a,i)=>`<article class="fact"><div class="no">Report No. ${page*PER+i+1}</div><h3>${esc(a.title)}</h3>${artHtml(a)}</article>`).join("")}</div>`;
+        if(pages>1)h+=`<div class="pager">${Array.from({length:pages},(_,i)=>`<button class="btn sm ${i===page?"on":""}" data-p="${i}">Page ${i+1}</button>`).join("")}</div>`;
+        if(!I.fallback&&I.misc.length)h+=`<div class="pager"><button class="btn" data-v="misc">Read the Miscellany (${I.misc.length})</button></div>`;
+      }
+    }
+  }
+  if(configured&&view==="front")h+=bestHtml();
+  h+=dlgHtml()+`<footer>The Luisville Journal · Printed daily · All rights reserved<br>${me?`<div class="me">Signed in as <b>${esc(me.name)}</b> (${me.role}) ${me.subscribed?`<button class="writer" style="opacity:.8" data-unsub>unsubscribe</button> `:""}<button class="writer" style="opacity:.8" data-logout>log out</button></div>`:`<button class="writer" data-panel="login">log in</button>`}${vis?`<div class="small">Your ID: <span class="myid">${esc(vis.id)}</span> · <button class="writer" style="opacity:.8" data-support>contact support</button>${pushBtn()}</div>`:configured?`<div class="small">ID unavailable (run setup.sql in Supabase, then reload)</div>`:""}</footer>`;
+  const y=scrollY;document.getElementById("app").innerHTML=h;scrollTo(0,y);bind();
+  if(ctl&&ctl.focus&&ctl.accounts&&!ctl.scrolled){const el=document.getElementById("vid-"+ctl.focus);if(el){ctl.scrolled=true;el.scrollIntoView({block:"center"})}}
+  if(hlScroll){const el=document.getElementById("a-"+hl);if(el){hlScroll=false;el.scrollIntoView({block:"center"})}}
+}
+const imgs={},imgT={};
+async function loadImages(k,full){const arts=byDay[k]||[],now=Date.now(),need=(full||!imgT[k]||now-imgT[k]>3e5?arts:arts.filter(a=>!(a.id in imgs))).map(a=>a.id);if(!need.length)return;imgT[k]=now;
+  try{const r=await sb.from("articles").select("id,image").in("id",need).neq("image","");if(r.error)throw r.error;const got={};(r.data||[]).forEach(x=>got[x.id]=x.image);let ch=false;
+    need.forEach(id=>{const v=got[id]||"";if(imgs[id]!==v){imgs[id]=v;ch=true}});
+    if(ch){byDay[k]=(byDay[k]||[]).map(a=>({...a,image:imgs[a.id]||""}));render()}}catch(e){}}
+async function loadDay(k,soft){
+  try{const r=await sb.from("articles").select("id,title,author,body,type,admin,account_id,ts,day").eq("day",k);if(r.error)throw r.error;byDay[k]=r.data.map(a=>({...a,image:imgs[a.id]||""}))}catch(e){byDay[k]=byDay[k]||[]}
+  if(isAdmin()){try{(await rpc("admin_day_meta",{p_tok:tok(),p_day:k})).forEach(x=>meta[x.id]=x)}catch(e){}}
+  render();loadImages(k,!soft);
+}
+const VAPID_PUBLIC="PASTE_VAPID_PUBLIC_KEY";
+const pushOk=()=>"serviceWorker" in navigator&&"PushManager" in window&&"Notification" in window&&!/PASTE/.test(VAPID_PUBLIC);
+const b64u=k=>{const r=atob((k+"=".repeat((4-k.length%4)%4)).replace(/-/g,"+").replace(/_/g,"/"));return Uint8Array.from(r,c=>c.charCodeAt(0))};
+let pushFor=null;
+async function savePush(ask){if(!pushOk()||!vis)return;try{
+  if(ask&&Notification.permission==="default")await Notification.requestPermission();
+  if(Notification.permission!=="granted"){if(ask)alert("Notifications are blocked in your browser settings for this site.");return}
+  const reg=await navigator.serviceWorker.register("sw.js");await navigator.serviceWorker.ready;
+  let sub=await reg.pushManager.getSubscription();if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(VAPID_PUBLIC)});
+  const j=sub.toJSON();await rpc("save_push",{...vArgs(),p_tok:tok(),p_endpoint:j.endpoint,p_p256dh:j.keys.p256dh,p_auth:j.keys.auth});
+  pushFor=me?me.id:"";if(ask)render()}catch(e){if(ask)alert("Notifications could not be enabled: "+(e.message||e))}}
+const pushBtn=()=>pushOk()?` · <button class="writer" data-push>${Notification.permission==="granted"?"🔔 notifications on":"🔔 enable notifications"}</button>`:"";
+const REASONS=["Spam","Harassment or insults","Explicit or inappropriate","Scam","Other"];
+function dlgHtml(){if(!dlg)return"";const rp=dlg.t==="report";
+  return `<div style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:flex;align-items:center;justify-content:center;padding:12px"><form class="ed" id="dlgf" style="max-width:420px;width:100%;background:var(--paper);color:var(--ink);margin:0"><b>${rp?"Report this article":dlg.t==="reply"?"Reply to "+esc(dlg.name||"this visitor"):"Contact support"}</b>${rp?`<select id="d-r">${REASONS.map(r=>`<option>${r}</option>`).join("")}</select>`:""}<textarea id="d-t" maxlength="500" placeholder="${rp?"Details (required if you choose Other)":dlg.t==="reply"?"Your reply…":"Your message to the editors…"}" ${rp?"":"required"}></textarea><div><button class="btn" type="submit">Send</button> <button class="btn" type="button" data-dlg-x>Cancel</button></div></form></div>`}
+const reqHtml=()=>{const rs=ctl.requests||[],op=rs.filter(r=>r.status==="open"),dn=rs.filter(r=>r.status!=="open"),L=(id)=>id?`<a href="#" class="idl" data-cvid="${esc(id)}">${esc(id)}</a>`:"–";
+  const row=r=>`<tr><td>${r.kind==="report"?"⚑ Report":"✉ Support"}<div class="small">${fmtDT(r.created_at)}</div></td><td>${r.kind==="report"?`<b>${esc(r.reason||"")}</b>${r.detail?` — ${esc(r.detail)}`:""}<div class="small">“${esc(r.title||"article removed")}” · author ${L(r.author_vid)} · reported by ${L(r.reporter)}</div>`:`${esc(r.body||"")}<div class="small">${esc(r.name||"")} ${L(r.visitor_id)}</div>`}</td><td>${r.status==="open"?`${r.kind==="support"?`<button class="btn sm" data-reply="${r.id}" data-rn="${esc(r.name||"")}">Reply</button>`:`<button class="btn sm" data-req="${r.kind}|${r.id}|done">Done</button>`}<button class="btn sm" data-req="${r.kind}|${r.id}|ignored">Ignore</button>`:`<span class="small">${r.status}</span> <button class="btn sm" data-req="${r.kind}|${r.id}|open">Reopen</button>${r.kind==="support"?` <button class="btn sm" data-reqdel="${r.id}">Delete</button>`:""}`}</td></tr>`;
+  return `<section class="cbox"><h3>Reports &amp; support (${op.length} open)</h3><div class="scroll"><table class="t">${op.slice(0,lim("req")).map(row).join("")||`<tr><td colspan="3">Nothing to handle.</td></tr>`}${ctl.showDone?dn.slice(0,lim("reqd")).map(row).join(""):""}</table></div>${more("req",op.length)}${ctl.showDone?more("reqd",dn.length):""}${dn.length?`<div style="margin-top:6px"><button class="btn sm" data-reqdone>${ctl.showDone?"Hide":"Show"} handled (${dn.length})</button>${dn.some(r=>r.kind==="support")?` <button class="btn sm" data-reqclear>Delete all archived support</button>`:""}<div class="small">Archived support messages are deleted automatically after 7 days.</div></div>`:""}</section>`};
+async function loadCtl(keep){
+  const old=keep?ctl:{};ctl={...old};
+  const get=async(k,fn)=>{try{ctl[k]=await rpc(fn,{p_tok:tok()})}catch(e){ctl.err=e.message}};
+  await Promise.all([get("accounts","list_accounts"),get("stats","visit_stats"),get("visitors","list_visitors"),get("storage","storage_stats"),get("requests","list_requests"),(async()=>{try{ctl.idn=await rpc("list_identities",{p_tok:tok()})}catch(e){ctl.idn=[]}})(),(async()=>{try{ctl.broadcasts=await rpc("list_broadcasts",{p_tok:tok()})}catch(e){ctl.broadcasts=[]}})()]);
+  render();
+}
+function setMe(r){me={id:r.id,name:r.name,role:r.role,subscribed:!!r.subscribed,token:r.token};try{localStorage.setItem("dng_tok",r.token)}catch(e){}panel="";msg="";loadDay(day);pollInbox()}
+function askNotif(){try{if("Notification" in window&&Notification.permission==="default")Notification.requestPermission()}catch(e){}}
+async function pollInbox(){
+  if(!sb||(!me&&!vis))return;
+  try{const r=await rpc("my_messages",{p_tok:tok(),...vArgs()});inbox=r||[];
+    inbox.forEach(m=>{if(!seen.has(m.id)){seen.add(m.id);if(polled&&"Notification" in window&&Notification.permission==="granted"){try{new Notification(m.kind==="news"?"New article – The Luisville Journal":m.kind==="report"?"Reported article – The Luisville Journal":m.kind==="support"?"Support request – The Luisville Journal":"Message – The Luisville Journal",{body:m.body})}catch(e){}}}});
+    polled=true;const j=JSON.stringify(inbox);if(j!==lastInbox){lastInbox=j;if(!form&&!panel&&view!=="control")render()}}catch(e){}
+}
+async function markRead(ids){inbox=inbox.filter(m=>!ids.includes(m.id));try{await rpc("mark_read",{p_tok:tok(),...vArgs(),p_ids:ids})}catch(e){}}
+function goCtlVid(vid){view="control";page=0;form=null;panel="";hl=null;ctl={focus:vid};render();loadCtl(true)}
+function goArticle(id,d,v){day=d;view=v;page=0;hl=id;hlScroll=true;form=null;panel="";ctl=null;render();loadDay(d)}
+function bind(){
+  const $=s=>document.querySelectorAll(s);
+  $("[data-v]").forEach(b=>b.onclick=()=>{view=b.dataset.v;page=0;form=null;panel="";hl=null;if(view==="control"){ctl={};render();loadCtl()}else{render();if(view==="best")loadPop()}});
+  $("[data-p]").forEach(b=>b.onclick=()=>{page=+b.dataset.p;render()});
+  $("[data-day]").forEach(b=>b.onclick=()=>{day=b.dataset.day;view="front";page=0;render();scrollTo(0,0);loadDay(day)});
+  $("[data-today]").forEach(b=>b.onclick=()=>{day=todayKey();view="front";render()});
+  $("[data-new]").forEach(b=>b.onclick=()=>{form={};render();scrollTo(0,0)});
+  $("[data-edit]").forEach(b=>b.onclick=()=>{form={id:b.dataset.edit};render();scrollTo(0,0)});
+  $("[data-del]").forEach(b=>b.onclick=async()=>{if(pendingDel!==b.dataset.del){pendingDel=b.dataset.del;render();return}pendingDel=null;try{await rpc("delete_article",{p_tok:tok(),p_id:b.dataset.del});loadDay(day)}catch(e){alert(e.message);render()}});
+  $("[data-panel]").forEach(b=>b.onclick=()=>{panel=b.dataset.panel;msg="";form=null;render();scrollTo(0,0)});
+  $("[data-logout]").forEach(b=>b.onclick=async()=>{try{await rpc("logout",{p_tok:tok()})}catch(e){}me=null;form=null;ctl=null;meta={};inbox=[];if(view==="control")view="front";try{localStorage.removeItem("dng_tok")}catch(e){}render()});
+  $("[data-sub]").forEach(b=>b.onclick=async()=>{askNotif();if(me){try{await rpc("set_subscription",{p_tok:tok(),p_on:true});me.subscribed=true}catch(e){alert(e.message)}render()}else{panel="subscribe";msg="";render();scrollTo(0,0)}});
+  $("[data-unsub]").forEach(b=>b.onclick=async()=>{try{await rpc("set_subscription",{p_tok:tok(),p_on:false});me.subscribed=false}catch(e){alert(e.message)}render()});
+  /* forms: log in / activate / subscribe */
+  const lg=document.getElementById("lgf");
+  if(lg)lg.onsubmit=async e=>{e.preventDefault();try{const r=await rpc("login",{p_name:val("l-n"),p_pass:val("l-p")});if(r.error){msg=r.error;render()}else setMe(r)}catch(err){msg="Could not reach the server.";render()}};
+  const ac=document.getElementById("acf");
+  if(ac)ac.onsubmit=async e=>{e.preventDefault();if(val("a-p")!==val("a-p2")){msg="The two passwords do not match.";render();return}
+    try{const r=await rpc("activate",{p_code:val("a-c"),p_name:val("a-n"),p_pass:val("a-p")});if(r.error){msg=r.error;render()}else setMe(r)}catch(err){msg="Could not reach the server.";render()}};
+  const sf=document.getElementById("sbf");
+  if(sf)sf.onsubmit=async e=>{e.preventDefault();if(val("s-p")!==val("s-p2")){msg="The two passwords do not match.";render();return}
+    try{const r=await rpc("subscribe_signup",{p_name:val("s-n"),p_pass:val("s-p")});if(r.error){msg=r.error;render()}else{askNotif();setMe(r)}}catch(err){msg="Could not reach the server.";render()}};
+  /* inbox */
+  $("[data-prev]").forEach(b=>b.onclick=()=>{day=addDays(day,-1);page=0;render();scrollTo(0,0);loadDay(day)});
+  $("[data-next]").forEach(b=>b.onclick=()=>{day=addDays(day,1);page=0;render();scrollTo(0,0);loadDay(day)});
+  $("[data-arch]").forEach(b=>b.onclick=()=>{arch.open=!arch.open;if(arch.open){arch.n=5;loadArchive()}else render()});
+  $("[data-goart]").forEach(b=>b.onclick=()=>{const [id,d,t]=b.dataset.goart.split("|");goArticle(id,d,t==="misc"?"misc":"front")});
+  $("[data-arch-more]").forEach(b=>b.onclick=()=>{arch.n+=5;loadArchive()});
+  {const go=()=>{arch.q=val("a-q").trim();arch.n=5;loadArchive()};$("[data-arch-find]").forEach(b=>b.onclick=go);const ai=document.getElementById("a-q");if(ai)ai.onkeydown=e=>{if(e.key==="Enter")go()}}
+  $("[data-more]").forEach(b=>b.onclick=()=>{const k=b.dataset.more;ctl.lim=ctl.lim||{};ctl.lim[k]=(ctl.lim[k]||5)+5;render()});
+  {const sq=k=>{const i=document.querySelector(`[data-sqi="${k}"]`);ctl.sq=ctl.sq||{};ctl.sq[k]=i?i.value.trim():"";ctl.lim=ctl.lim||{};ctl.lim[k]=5;render()};$("[data-sqb]").forEach(b=>b.onclick=()=>sq(b.dataset.sqb));$("[data-sqi]").forEach(i=>i.onkeydown=e=>{if(e.key==="Enter")sq(i.dataset.sqi)})}
+  $("[data-ffind]").forEach(b=>b.onclick=runFind);
+  {const fi=document.getElementById("f-q");if(fi)fi.onkeydown=e=>{if(e.key==="Enter")runFind()}}
+  {const bs=async kind=>{const body=val("b-body").trim();if(!body)return alert("Write a message first.");try{await rpc("send_broadcast",{p_tok:tok(),p_kind:kind,p_target:val("b-t"),p_body:body});alert(kind==="pinned"?"Message pinned.":"Message sent.");if(kind==="pinned")loadPinned()}catch(e){return alert(e.message)}loadCtl(true)};
+   const b1=document.getElementById("b-send"),b2=document.getElementById("b-pin");if(b1)b1.onclick=()=>bs("direct");if(b2)b2.onclick=()=>bs("pinned")}
+  $("[data-bcdel]").forEach(b=>b.onclick=async()=>{if(!confirm("Delete this message? It will disappear for everyone."))return;try{await rpc("delete_broadcast",{p_tok:tok(),p_id:b.dataset.bcdel});loadPinned()}catch(e){alert(e.message)}loadCtl(true)});
+  $("[data-bm-ok]").forEach(b=>b.onclick=()=>{try{localStorage.setItem("dng_bm","1")}catch(e){}render()});
+  $("[data-ib-ok]").forEach(b=>b.onclick=()=>{markRead([b.dataset.ibOk]);render()});
+  $("[data-ib-read]").forEach(b=>b.onclick=()=>{const m=inbox.find(x=>x.id===b.dataset.ibRead);if(!m)return;markRead([m.id]);goArticle(m.article_id,m.day,"front")});
+  $("[data-ib-rev]").forEach(b=>b.onclick=async()=>{const m=inbox.find(x=>x.id===b.dataset.ibRev);if(!m)return;markRead([m.id]);try{const r=await rpc("admin_day_meta",{p_tok:tok(),p_day:m.day});const x=(r||[]).find(i=>i.id===m.article_id);if(x)goCtlVid(x.vid);else{alert("This article no longer exists.");render()}}catch(e){alert(e.message)}});
+  $("[data-flagged]").forEach(b=>b.onclick=e=>{if(e.target.closest("button,a,input"))return;goCtlVid(b.dataset.flagged)});
+  $("[data-cvid]").forEach(b=>b.onclick=e=>{e.preventDefault();goCtlVid(b.dataset.cvid)});
+  /* report + moderation */
+  $("[data-report]").forEach(b=>b.onclick=()=>{dlg={t:"report",id:b.dataset.report};render()});
+  $("[data-support]").forEach(b=>b.onclick=()=>{dlg={t:"support"};render()});
+  $("[data-reply]").forEach(b=>b.onclick=()=>{dlg={t:"reply",id:b.dataset.reply,name:b.dataset.rn};render()});
+  $("[data-push]").forEach(b=>b.onclick=()=>savePush(true));
+  $("[data-dlg-x]").forEach(b=>b.onclick=()=>{dlg=null;render()});
+  {const dr=document.getElementById("d-r"),dt=document.getElementById("d-t");if(dr)dr.onchange=()=>{dt.required=dr.value==="Other"};const df=document.getElementById("dlgf");if(df)df.onsubmit=async e=>{e.preventDefault();const t=val("d-t").trim();try{if(dlg.t==="report"){const reason=val("d-r");if(reason==="Other"&&!t){alert("Please write your reason.");return}await rpc("report_article",{...vArgs(),p_article:dlg.id,p_reason:reason,p_detail:t});reported.add(dlg.id);alert("Thank you. The editors have been notified.")}else if(dlg.t==="reply"){await rpc("reply_support",{p_tok:tok(),p_id:dlg.id,p_body:t});alert("Reply sent.");dlg=null;loadCtl(true)}else{await rpc("contact_support",{...vArgs(),p_body:t});alert("Your message was sent to the editors.")}dlg=null}catch(err){alert(err.message)}render()}}
+  $("[data-req]").forEach(b=>b.onclick=async()=>{const [k,id,st]=b.dataset.req.split("|");try{await rpc("set_request_status",{p_tok:tok(),p_kind:k,p_id:id,p_status:st})}catch(e){ctl.err=e.message}loadCtl(true)});
+  $("[data-reqdel]").forEach(b=>b.onclick=async()=>{try{await rpc("delete_request",{p_tok:tok(),p_id:b.dataset.reqdel})}catch(e){ctl.err=e.message}loadCtl(true)});
+  $("[data-reqclear]").forEach(b=>b.onclick=async()=>{if(!confirm("Delete all archived support messages?"))return;try{await rpc("clear_archived_support",{p_tok:tok()})}catch(e){ctl.err=e.message}loadCtl(true)});
+  $("[data-reqdone]").forEach(b=>b.onclick=()=>{ctl.showDone=!ctl.showDone;render()});
+  $("[data-mod]").forEach(b=>b.onclick=async()=>{const [id,act]=b.dataset.mod.split("|");try{await rpc("moderate",{p_tok:tok(),p_article:id,p_action:act})}catch(e){alert(e.message)}loadDay(day)});
+  $("[data-fire]").forEach(b=>b.onclick=async()=>{if(!vis)return alert("ID unavailable.");const id=b.dataset.fire;try{const r=await rpc("toggle_fire",{...vArgs(),p_article:id});fires[id]=r.count;r.on?myFires.add(id):myFires.delete(id)}catch(e){alert(e.message)}render()});
+  $("[data-pop]").forEach(b=>b.onclick=()=>{popRange=b.dataset.pop;loadPop()});
+  $("[data-popart]").forEach(b=>b.onclick=e=>{e.preventDefault();const [id,d,t]=b.dataset.popart.split("|");goArticle(id,d,t==="misc"?"misc":"front")});
+  $("[data-bestfull]").forEach(b=>b.onclick=()=>{bestFull=!bestFull;render()});
+  $("[data-vfind]").forEach(b=>b.onclick=()=>{ctl.vq=val("v-q").trim();render()});
+  $("[data-vclear]").forEach(b=>b.onclick=()=>{ctl.vq="";render()});
+  {const qi=document.getElementById("v-q");if(qi)qi.onkeydown=e=>{if(e.key==="Enter"){ctl.vq=qi.value.trim();render()}}}
+  $("[data-vid]").forEach(b=>b.onclick=async e=>{e.preventDefault();try{const r=await rpc("visitor_article",{p_tok:tok(),p_vid:b.dataset.vid});if(!r)alert("No article from this ID.");else goArticle(r.id,r.day,"misc")}catch(err){alert(err.message)}});
+  /* control room */
+  const gen=document.getElementById("c-gen");
+  if(gen)gen.onclick=async()=>{try{const r=await rpc("gen_code",{p_tok:tok(),p_role:val("c-role")});ctl.code={code:r.code,until:Date.parse(r.expires_at)};ctl.err=""}catch(e){ctl.err=e.message}render()};
+  $("[data-acc-edit]").forEach(b=>b.onclick=()=>{ctl.editing=b.dataset.accEdit||null;ctl.err="";render()});
+  $("[data-acc-del]").forEach(b=>b.onclick=async()=>{const id=b.dataset.accDel;if(ctl.pendingDel!==id){ctl.pendingDel=id;render();return}ctl.pendingDel=null;try{await rpc("delete_account",{p_tok:tok(),p_id:id});ctl.err=""}catch(e){ctl.err=e.message}loadCtl(true)});
+  $("[data-acc-save]").forEach(b=>b.onclick=async()=>{try{await rpc("update_account",{p_tok:tok(),p_id:b.dataset.accSave,p_name:val("e-n"),p_pass:val("e-p"),p_role:val("e-r")});ctl.editing=null;ctl.err=""}catch(e){ctl.err=e.message}loadCtl(true)});
+  $("[data-blkopen]").forEach(b=>b.onclick=()=>{ctl.blkOpen=ctl.blkOpen===b.dataset.blkopen?null:b.dataset.blkopen;render()});
+  $("[data-blk]").forEach(b=>b.onclick=async()=>{const [id,mode]=b.dataset.blk.split("|");try{await rpc("block_visitor",{p_tok:tok(),p_vid:id,p_mode:mode});ctl.err=""}catch(e){ctl.err=e.message}loadCtl(true)});
+  $("[data-msg-acc]").forEach(b=>b.onclick=()=>{const [id,name]=b.dataset.msgAcc.split("|");ctl.msgTo={account:id,label:name};render();scrollTo(0,0)});
+  $("[data-msg-vis]").forEach(b=>b.onclick=()=>{ctl.msgTo={visitor:b.dataset.msgVis,label:"ID "+b.dataset.msgVis};render();scrollTo(0,0)});
+  const mc=document.getElementById("m-cancel");if(mc)mc.onclick=()=>{ctl.msgTo=null;render()};
+  const ms=document.getElementById("m-send");
+  if(ms)ms.onclick=async()=>{try{await rpc("send_message",{p_tok:tok(),p_to_account:ctl.msgTo.account||null,p_to_visitor:ctl.msgTo.visitor||null,p_body:val("m-body")});ctl.msgTo=null;ctl.err="";alert("Message sent. It will be shown the next time they visit.")}catch(e){ctl.err=e.message}render()};
+  /* article form */
+  const ed=document.getElementById("ed");if(!ed)return;
+  let img=null;const old=form.id?findDoc(form.id):null;
+  const t=document.getElementById("f-type");if(t)t.value=old?old.type:"news";
+  document.getElementById("f-cancel").onclick=()=>{form=null;render()};
+  const nt=document.getElementById("f-notify");
+  if(t){const sync=()=>{if(!nt)return;if(t.value==="une"){nt.checked=true;nt.disabled=true}else nt.disabled=false};t.onchange=sync;sync()}
+  const fi=document.getElementById("f-img");
+  if(fi)fi.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,700/im.width),c=document.createElement("canvas");c.width=im.width*s;c.height=im.height*s;c.getContext("2d").drawImage(im,0,0,c.width,c.height);img=c.toDataURL("image/jpeg",.7);document.getElementById("f-imgs").textContent="Image ready ✓"};im.src=r.result};r.readAsDataURL(f)};
+  ed.onsubmit=async e=>{e.preventDefault();
+    const title=val("f-title").trim(),body=val("f-body").trim();
+    try{
+      if(old)await rpc("edit_article",{p_tok:tok(),p_id:old.id,p_title:title,p_body:body,p_type:val("f-type")||old.type,p_image:img});
+      else if(isStaff()){await rpc("post_article",{p_tok:tok(),p_title:title,p_body:body,p_type:val("f-type"),p_image:img||"",p_day:todayKey(),p_notify:!!(nt&&nt.checked)});view="front"}
+      else{await rpc("post_misc",{...vArgs(),p_tok:tok(),p_title:title,p_body:body,p_image:img||"",p_author:val("f-author").trim(),p_day:todayKey()});{const n=val("f-author").trim();if(n){try{localStorage.setItem("dng_name",n)}catch(e){}}}view="front"}
+      form=null;loadBest();await loadDay(old?old.day:todayKey());
+    }catch(err){if(/log in/i.test(err.message||"")){me=null;try{localStorage.removeItem("dng_tok")}catch(x){}}alert("Could not publish: "+((err&&(err.message||err.details))||err));render()}
+  };
+}
+async function loadFires(){if(!configured)return;try{const r=await rpc("fire_counts",{p_vid:vis?vis.id:""});const nf=r.counts||{},nm=new Set(r.mine||[]);if(JSON.stringify(nf)!==JSON.stringify(fires)||[...nm].join()!==[...myFires].join()){fires=nf;myFires=nm;if(!form&&!panel&&view!=="control")render()}}catch(e){}}
+async function loadPop(){try{pop=await rpc("popular_articles",{p_range:popRange})||[];if(view==="best")render()}catch(e){}}
+async function loadBest(){try{const r=await rpc("best_editors")||[];if(JSON.stringify(r)!==JSON.stringify(rank)){rank=r;if(!form&&!panel&&view!=="control")render()}}catch(e){}}
+async function purge(){try{if(localStorage.getItem("dng_clean")===todayKey())return;await sb.rpc("cleanup_images");localStorage.setItem("dng_clean",todayKey())}catch(e){}}
+render();
+if(configured){
+  sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
+  (async()=>{
+    try{vis=JSON.parse(localStorage.getItem("dng_vis")||"null")}catch(e){}
+    if(!vis||!vis.id){try{vis=await rpc("new_visitor");localStorage.setItem("dng_vis",JSON.stringify(vis))}catch(e){}}
+    (async()=>{try{if(localStorage.getItem("dng_v")!==todayKey()){const r=await sb.rpc("log_visit",vArgs());if(r.error){if(/unknown|visitor/i.test(r.error.message||"")){localStorage.removeItem("dng_vis");vis=null;vis=await rpc("new_visitor");localStorage.setItem("dng_vis",JSON.stringify(vis));await sb.rpc("log_visit",vArgs())}}localStorage.setItem("dng_v",todayKey())}}catch(e){}})();
+    try{const t=localStorage.getItem("dng_tok");if(t){const r=await rpc("me",{p_tok:t});if(r){me={id:r.id,name:r.name,role:r.role,subscribed:!!r.subscribed,token:t}}else localStorage.removeItem("dng_tok")}}catch(e){}
+    render();if(isAdmin())loadDay(day);pollInbox();
+  })();
+  const tick=()=>{if(!form&&!panel&&view!=="control")loadDay(todayKey(),true);pollInbox();loadBest();loadFires();loadPinned();if(vis&&me&&syncFor!==me.id){syncFor=me.id;sb.rpc("sync_identity",{...vArgs(),p_tok:tok()})}if(pushOk()&&Notification.permission==="granted"&&pushFor!==(me?me.id:""))savePush();if(view==="best")loadPop()};tick();setInterval(tick,30000);
+  purge();
+  setInterval(()=>{const el=document.getElementById("c-left");if(el&&ctl&&ctl.code){const s=Math.round((ctl.code.until-Date.now())/1000);el.textContent=s>0?"· expires in "+Math.floor(s/60)+":"+String(s%60).padStart(2,"0"):"· expired"}},1000);
+  setInterval(()=>{if(day!==todayKey()&&day===lastDay&&!form&&!hl)location.reload();lastDay=day},60000);
+}
+let lastDay=day;
+</script></body></html>
